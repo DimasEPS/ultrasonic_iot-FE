@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Distance Sensor 1 - Dashboard</title>
+    <link rel="stylesheet" href="style/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="navbar">
+      <h2>📊 Distance Sensor 1 Dashboard</h2>
+      <div>
+        <span
+          id="welcome-text"
+          style="margin-right: 1rem; color: rgba(255, 255, 255, 0.8)"
+        ></span>
+        <button onclick="logout()">🚪 Logout</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📈 Real-time Distance Chart</h3>
+      <div class="chart-container">
+        <canvas id="chart1"></canvas>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📋 Recent Data Records</h3>
+      <div style="overflow-x: auto">
+        <table id="data-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Distance (cm)</th>
+              <th>Status</th>
+              <th>Timestamp</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td
+                colspan="4"
+                style="text-align: center; color: var(--text-secondary)"
+              >
+                <div class="loading" style="margin: 1rem auto"></div>
+                Loading data...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+      // Initialize dashboard
+      document.addEventListener("DOMContentLoaded", function () {
+        const username = localStorage.getItem("username");
+        if (username) {
+          document.getElementById(
+            "welcome-text"
+          ).textContent = `Welcome, ${username}`;
+        }
+
+        loadDistance("1");
+        loadDistanceChart("1", "chart1");
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Super Admin - IoT Control Center</title>
+    <link rel="stylesheet" href="style/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="navbar">
+      <h2>👑 Super Admin Control Center</h2>
+      <div>
+        <span
+          id="welcome-text"
+          style="margin-right: 1rem; color: rgba(255, 255, 255, 0.8)"
+        ></span>
+        <button onclick="logout()">🚪 Logout</button>
+      </div>
+    </div>
+
+    <!-- Real-time Charts Grid -->
+    <div class="grid">
+      <div class="card">
+        <h3>
+          📈 Distance Sensor 1 <span class="real-time-indicator">🔴 LIVE</span>
+        </h3>
+        <div class="chart-container">
+          <canvas id="chart1"></canvas>
+        </div>
+      </div>
+      <div class="card">
+        <h3>
+          📈 Distance Sensor 2 <span class="real-time-indicator">🔴 LIVE</span>
+        </h3>
+        <div class="chart-container">
+          <canvas id="chart2"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Combined Data Table -->
+    <div class="card">
+      <h3>📊 All Distance Sensors Data</h3>
+      <div style="overflow-x: auto">
+        <table id="data-table">
+          <thead>
+            <tr>
+              <th>Source</th>
+              <th>ID</th>
+              <th>Distance (cm)</th>
+              <th>Status</th>
+              <th>Timestamp</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td
+                colspan="5"
+                style="text-align: center; color: var(--text-secondary)"
+              >
+                <div class="loading" style="margin: 1rem auto"></div>
+                Loading data...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Device Control Panel -->
+    <div class="card">
+      <h3>🎛️ TV Control Panel</h3>
+      <div
+        style="display: flex; gap: 2rem; align-items: center; flex-wrap: wrap"
+      >
+        <label style="display: flex; align-items: center; gap: 0.5rem">
+          📺 TV Control:
+          <input type="checkbox" id="tv" style="transform: scale(1.2)" />
+          <span
+            id="tv-status"
+            style="margin-left: 0.5rem; font-weight: 600"
+          ></span>
+        </label>
+        <button onclick="updateControl()" style="padding: 0.75rem 2rem">
+          🔄 Update TV Control
+        </button>
+      </div>
+      <div id="control-message" style="margin-top: 1rem"></div>
+    </div>
+
+    <!-- User Activity Logs -->
+    <div class="card">
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 1rem;
+        "
+      >
+        <h3>👥 User Activity Logs</h3>
+        <button
+          onclick="refreshUserLogs()"
+          id="refresh-logs-btn"
+          style="padding: 0.5rem 1rem; font-size: 0.875rem"
+        >
+          🔄 Refresh Logs
+        </button>
+      </div>
+      <div style="overflow-x: auto">
+        <table id="log-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Username</th>
+              <th>Role</th>
+              <th>Last Login</th>
+              <th>IP Address</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td
+                colspan="5"
+                style="text-align: center; color: var(--text-secondary)"
+              >
+                <div class="loading" style="margin: 1rem auto"></div>
+                Loading user logs...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+      // Initialize super admin dashboard
+      document.addEventListener("DOMContentLoaded", function () {
+        const username = localStorage.getItem("username");
+        if (username) {
+          document.getElementById(
+            "welcome-text"
+          ).textContent = `Welcome, ${username}`;
+        }
+
+        // Load all data
+        loadDistanceChart("1", "chart1");
+        loadDistanceChart("2", "chart2");
+        loadDistance("all");
+        loadControl();
+        loadLogs();
+
+        // Update control status display
+        updateControlStatus();
+      });
+
+      function updateControlStatus() {
+        const tvCheckbox = document.getElementById("tv");
+        const tvStatus = document.getElementById("tv-status");
+
+        if (tvCheckbox && tvStatus) {
+          tvStatus.textContent = tvCheckbox.checked ? "(ON)" : "(OFF)";
+          tvStatus.className = tvCheckbox.checked
+            ? "status-online"
+            : "status-offline";
+        }
+      }
+
+      // Add event listeners for real-time status update
+      document.addEventListener("change", function (e) {
+        if (e.target.id === "tv") {
+          updateControlStatus();
+        }
+      });
+    </script>
+  </body>
+</html>

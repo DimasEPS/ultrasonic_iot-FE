@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IoT Ultrasonic - Login</title>
+    <link rel="stylesheet" href="style/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="login-container">
+      <h2>🌊 IoT Ultrasonic System</h2>
+      <form onsubmit="login(event)">
+        <input
+          type="text"
+          id="username"
+          placeholder="Enter username"
+          required
+        />
+        <input
+          type="password"
+          id="password"
+          placeholder="Enter password"
+          required
+        />
+        <button type="submit" id="loginBtn">
+          <span id="loginText">Sign In</span>
+          <span id="loginLoader" class="loading" style="display: none"></span>
+        </button>
+      </form>
+      <div id="message"></div>
+    </div>
+    <script src="js/script.js"></script>
+  </body>
+</html>
