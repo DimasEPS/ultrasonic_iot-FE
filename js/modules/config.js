@@ -3,7 +3,7 @@
  * Contains all configuration constants and settings
  */
 export const CONFIG = {
-  IP: "192.168.1.12",
+  IP: "10.47.91.82",
   PORT: 3000,
 
   get API_URL() {
